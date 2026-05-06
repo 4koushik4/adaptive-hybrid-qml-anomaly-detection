@@ -1,0 +1,59 @@
+project:
+  name: qml_anomaly_detection
+  version: 1.0.0
+
+paths:
+  raw_data: data/raw
+  processed_data: data/processed
+  models: models
+  logs: logs
+
+datasets:
+  use_real_data: true
+
+  nsl_kdd:
+    enabled: true
+    samples: 5000
+
+  unsw_nb15:
+    enabled: true
+    samples: 5000
+
+  mqtt_iot:
+    enabled: true
+    samples: 5000
+
+streaming:
+  enabled: true
+  delay_seconds: 0.05
+  anomaly_rate: 0.15
+  max_stream_points: 1000
+
+preprocessing:
+  normalization: minmax
+  pca_components: 4
+  handle_missing: true
+  clip_outliers: true
+
+qml:
+  framework: pennylane
+  n_qubits: 4
+  n_layers: 2
+  encoding: angle
+  threshold: 0.5
+
+training:
+  batch_size: 16
+  learning_rate: 0.05
+  epochs: 20
+  validation_split: 0.2
+  random_seed: 42
+
+dashboard:
+  enabled: true
+  host: localhost
+  port: 8501
+
+logging:
+  level: INFO
+  save_logs: true
