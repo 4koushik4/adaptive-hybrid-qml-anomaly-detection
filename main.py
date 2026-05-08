@@ -107,6 +107,11 @@ joblib.dump(
     "models/hybrid_qml.pkl"
 )
 
+joblib.dump(
+    preprocessor,
+    "models/preprocessor.pkl"
+)
+
 
 
 print("Model saved successfully.")

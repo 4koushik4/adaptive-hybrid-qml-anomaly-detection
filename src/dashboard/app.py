@@ -10,7 +10,7 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
-import random
+import joblib
 import time
 
 from src.ingestion.stream_simulator import (
@@ -93,16 +93,6 @@ sample_size = st.sidebar.slider(
     2000
 )
 
-epochs = st.sidebar.slider(
-
-    "QNN Epochs",
-
-    1,
-
-    10,
-
-    3
-)
 
 anomaly_rate = st.sidebar.slider(
 
