@@ -35,13 +35,7 @@ from src.qml.hybrid_model import (
     HybridQMLModel
 )
 
-from src.qml.qsvm import (
-    QSVMModel
-)
 
-from src.qml.qnn import (
-    QNNTrainer
-)
 
 # ─────────────────────────────────────────────────────────────
 # BENCHMARK SUITE
@@ -244,86 +238,7 @@ class BenchmarkSuite:
             probs
         )
 
-    # ─────────────────────────────────────────────────────
-    # QSVM
-    # ─────────────────────────────────────────────────────
-
-    def evaluate_qsvm(
-        self,
-        X_train,
-        X_test,
-        y_train,
-        y_test
-    ):
-
-        model = QSVMModel()
-
-        model.train(
-            X_train,
-            y_train
-        )
-
-        preds = model.predict(
-            X_test
-        )
-
-        probs = model.predict_proba(
-            X_test
-        )[:, 1]
-
-        self.add_result(
-
-            "QSVM",
-
-            y_test,
-
-            preds,
-
-            probs
-        )
-
-    # ─────────────────────────────────────────────────────
-    # QNN
-    # ─────────────────────────────────────────────────────
-
-    def evaluate_qnn(
-        self,
-        X_train,
-        X_test,
-        y_train,
-        y_test
-    ):
-
-        model = QNNTrainer(
-            lr=0.01,
-            epochs=3
-        )
-
-        # Smaller subset for speed
-        model.train(
-            X_train[:1000],
-            y_train[:1000]
-        )
-
-        probs = model.predict(
-            X_test
-        ).flatten()
-
-        preds = (
-            probs >= 0.5
-        ).astype(int)
-
-        self.add_result(
-
-            "QNN",
-
-            y_test,
-
-            preds,
-
-            probs
-        )
-
+   
     # ─────────────────────────────────────────────────────
     # FULL BENCHMARK
     # ─────────────────────────────────────────────────────
@@ -378,27 +293,7 @@ class BenchmarkSuite:
             y_test
         )
 
-        print(
-            "\nRunning QSVM..."
-        )
-
-        self.evaluate_qsvm(
-            X_train,
-            X_test,
-            y_train,
-            y_test
-        )
-
-        print(
-            "\nRunning QNN..."
-        )
-
-        self.evaluate_qnn(
-            X_train,
-            X_test,
-            y_train,
-            y_test
-        )
+       
 
     # ─────────────────────────────────────────────────────
     # RESULTS

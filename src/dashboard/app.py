@@ -313,7 +313,7 @@ if (
             if isinstance(v, (int, float))
         ]
 
-        for i in range(5):
+        for i in range(10):
 
             transformed[f"feature_{i}"] = (
 
