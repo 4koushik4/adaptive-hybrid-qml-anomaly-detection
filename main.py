@@ -25,13 +25,9 @@ from src.qml.hybrid_model import (
     HybridQMLModel
 )
 
-from src.qml.qsvm import (
-    QSVMModel
-)
 
-from src.qml.qnn import (
-    QNNTrainer
-)
+
+
 
 from src.evaluation.metrics import (
     PerformanceMetrics
@@ -55,11 +51,10 @@ loader = RealDataLoader()
 
 df = loader.load_all()
 
-# Practical sampling
-df = df.sample(
-    n=min(3000, len(df)),
-    random_state=42
-).reset_index(drop=True)
+
+# Use full combined datasets
+
+df = df.reset_index(drop=True)
 
 print(df.head())
 
@@ -87,35 +82,34 @@ hybrid_model = HybridQMLModel()
 
 hybrid_model.train(X, y)
 
-# ─────────────────────────────────────────────────────────────
-# TRAIN QSVM
-# ─────────────────────────────────────────────────────────────
 
-print("\nTraining QSVM Model...\n")
 
-qsvm_model = QSVMModel()
 
-qsvm_model.train(X, y)
+
 
 # ─────────────────────────────────────────────────────────────
-# TRAIN QNN
+# SAVE TRAINED MODELS
 # ─────────────────────────────────────────────────────────────
 
-print("\nTraining QNN Model...\n")
+import os
+import joblib
 
-qnn_model = QNNTrainer(
-    lr=0.01,
-    epochs=10
+print("\nSaving trained models...\n")
+
+os.makedirs(
+    "models",
+    exist_ok=True
 )
 
-X_qnn = X[:1000]
-y_qnn = y[:1000]
-
-qnn_model.train(
-    X_qnn,
-    y_qnn
+# Save Hybrid QML
+joblib.dump(
+    hybrid_model,
+    "models/hybrid_qml.pkl"
 )
 
+
+
+print("Model saved successfully.")
 # ─────────────────────────────────────────────────────────────
 # BENCHMARK SUITE
 # ─────────────────────────────────────────────────────────────

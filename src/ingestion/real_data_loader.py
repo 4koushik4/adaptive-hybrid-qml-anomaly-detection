@@ -240,148 +240,21 @@ class RealDataLoader:
             "nsl_kdd",
 
             [
-
-                "src_bytes",
-                "dst_bytes",
-                "count",
-                "srv_count",
-                "serror_rate"
-            ],
-
+    "src_bytes",
+    "dst_bytes",
+    "count",
+    "srv_count",
+    "serror_rate",
+    "srv_serror_rate",
+    "rerror_rate",
+    "same_srv_rate",
+    "diff_srv_rate",
+    "dst_host_count"
+],
             "label"
         )
 
-    # ─────────────────────────────────────────────────────
-    # UNSW-NB15
-    # ─────────────────────────────────────────────────────
-
-    def load_unsw_nb15(self):
-
-        folder = os.path.join(
-            self.data_dir,
-            "unsw_nb15"
-        )
-
-        os.makedirs(
-            folder,
-            exist_ok=True
-        )
-
-        path = os.path.join(
-            folder,
-            "unsw_nb15.csv"
-        )
-
-        url = (
-            "https://raw.githubusercontent.com/"
-            "mrbaselier/UNSW-NB15/master/"
-            "UNSW_NB15_training-set.csv"
-        )
-
-        self.download_file(
-            url,
-            path
-        )
-
-        df = pd.read_csv(
-            path,
-            low_memory=False
-        )
-
-        return self.standardize(
-
-            df,
-
-            "unsw_nb15",
-
-            [
-
-                "dur",
-                "spkts",
-                "dpkts",
-                "sbytes",
-                "dbytes"
-            ],
-
-            "label"
-        )
-
-    # ─────────────────────────────────────────────────────
-    # MQTT-IoT
-    # ─────────────────────────────────────────────────────
-
-    def load_mqtt_iot(self):
-
-        folder = os.path.join(
-            self.data_dir,
-            "mqtt_iot"
-        )
-
-        os.makedirs(
-            folder,
-            exist_ok=True
-        )
-
-        path = os.path.join(
-            folder,
-            "mqtt_iot.csv"
-        )
-
-        url = (
-            "https://raw.githubusercontent.com/"
-            "UNB-CIC/MQTT-IoT-IDS2020/main/"
-            "CSV/train70_test30/"
-            "mqtt_bruteforce_train.csv"
-        )
-
-        self.download_file(
-            url,
-            path
-        )
-
-        df = pd.read_csv(
-            path,
-            low_memory=False
-        )
-
-        df.columns = [
-            c.lower()
-            for c in df.columns
-        ]
-
-        label_col = None
-
-        for c in df.columns:
-
-            if "label" in c:
-
-                label_col = c
-                break
-
-        if label_col is None:
-
-            raise RuntimeError(
-                "MQTT label column not found."
-            )
-
-        return self.standardize(
-
-            df,
-
-            "mqtt_iot",
-
-            [
-
-                "tcp.len",
-                "tcp.srcport",
-                "tcp.dstport",
-                "ip.ttl",
-                "frame.len"
-            ],
-
-            label_col
-        )
-
+   
     # ─────────────────────────────────────────────────────
     # Load All
     # ─────────────────────────────────────────────────────
@@ -392,9 +265,8 @@ class RealDataLoader:
 
         loaders = [
 
-            self.load_nsl_kdd,
-            self.load_unsw_nb15,
-            self.load_mqtt_iot
+            self.load_nsl_kdd
+            
         ]
 
         for loader in loaders:

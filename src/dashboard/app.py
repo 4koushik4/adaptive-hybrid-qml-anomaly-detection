@@ -29,13 +29,9 @@ from src.qml.hybrid_model import (
     HybridQMLModel
 )
 
-from src.qml.qsvm import (
-    QSVMModel
-)
 
-from src.qml.qnn import (
-    QNNTrainer
-)
+
+
 
 from src.evaluation.drift_detector import (
     DriftDetector
@@ -176,21 +172,7 @@ if st.sidebar.button(
 
         hybrid_model.train(X, y)
 
-        # QSVM
-        qsvm_model = QSVMModel()
-
-        qsvm_model.train(X, y)
-
-        # QNN
-        qnn_model = QNNTrainer(
-            lr=0.01,
-            epochs=epochs
-        )
-
-        qnn_model.train(
-            X[:1000],
-            y[:1000]
-        )
+        
 
         # Save to session
         st.session_state.preprocessor = (
@@ -201,14 +183,7 @@ if st.sidebar.button(
             hybrid_model
         )
 
-        st.session_state.qsvm_model = (
-            qsvm_model
-        )
-
-        st.session_state.qnn_model = (
-            qnn_model
-        )
-
+        
         st.session_state.trained = True
 
     st.success(
