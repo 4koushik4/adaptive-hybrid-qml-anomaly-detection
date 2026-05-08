@@ -1,0 +1,4 @@
+model,accuracy,precision,recall,f1_score,roc_auc
+Isolation Forest,0.5638,0.5942,0.1982,0.2972,
+Random Forest,0.9487,0.966,0.9223,0.9436,0.9802
+Hybrid QML,0.9401,0.9726,0.8966,0.933,0.9754
